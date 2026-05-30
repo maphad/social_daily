@@ -321,8 +321,14 @@ def run_curator() -> int:
 
         raw_filename = choose_candidate_file(platform, search_files)
         if not raw_filename:
-            print(f"⚠️  No raw JSON file found for {platform} in {search_folder}.")
-            raw_payloads[platform] = []
+            # Fall back to local sample data for demo purposes
+            sample_file = LOCAL_SAMPLE_DATA_ROOT / f"{platform}_trends.json"
+            if sample_file.exists():
+                print(f"📂 Using sample data for {platform} (no live data in Box)")
+                raw_payloads[platform] = json.loads(sample_file.read_text(encoding="utf-8")).get("items", [])
+            else:
+                print(f"⚠️  No data found for {platform} (no Box data or sample file).")
+                raw_payloads[platform] = []
             continue
         try:
             raw_payloads[platform] = box.download_json_file(search_folder, raw_filename).get("items", [])
