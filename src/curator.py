@@ -15,7 +15,7 @@ from typing import Any, Dict, List, Optional
 import requests
 from dotenv import load_dotenv
 
-from src.email_sender import send_digest
+from email_sender import send_digest
 
 load_dotenv()
 
@@ -24,7 +24,7 @@ LOCAL_SAMPLE_DATA_ROOT = Path("sample_data")
 LOCAL_OUTPUT_ROOT = Path("output")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-BOX_DEVELOPER_TOKEN = os.getenv("BOX_DEVELOPER_TOKEN")
+BOX_DEVELOPER_TOKEN = os.getenv("BOX_ACCESS_TOKEN")
 
 MODEL_NAME = os.getenv("OPENAI_MODEL", "gpt-3.5-turbo")
 
@@ -307,13 +307,25 @@ def run_curator() -> int:
 
     raw_payloads: Dict[str, List[Dict[str, Any]]] = {}
     for platform in active_platforms:
-        raw_filename = choose_candidate_file(platform, available_files)
+        # Check platform subfolder first (e.g., /daily_raw/2026-05-30/instagram/)
+        platform_folder = f"{raw_folder}/{platform}"
+        platform_files = box.list_json_files(platform_folder)
+
+        # Fall back to the flat folder if no subfolder exists
+        if platform_files:
+            search_folder = platform_folder
+            search_files = platform_files
+        else:
+            search_folder = raw_folder
+            search_files = available_files
+
+        raw_filename = choose_candidate_file(platform, search_files)
         if not raw_filename:
-            print(f"⚠️  No raw JSON file found for {platform} in {raw_folder}.")
+            print(f"⚠️  No raw JSON file found for {platform} in {search_folder}.")
             raw_payloads[platform] = []
             continue
         try:
-            raw_payloads[platform] = box.download_json_file(raw_folder, raw_filename).get("items", [])
+            raw_payloads[platform] = box.download_json_file(search_folder, raw_filename).get("items", [])
             print(f"✓ Downloaded {raw_filename} for {platform} ({len(raw_payloads[platform])} items)")
         except Exception as error:
             print(f"⚠️  Error downloading {raw_filename}: {error}")

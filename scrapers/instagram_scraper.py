@@ -164,12 +164,19 @@ def select_top_posts(posts, top_n=3):
     return sorted(posts, key=lambda x: x["likes"], reverse=True)[:top_n]
 
 
-def upload_to_box(data, filename, box_token, folder_name="Instagram Top Posts Niche"):
-    """Upload JSON data to Box."""
-    folder_id = create_box_folder(folder_name, "0", box_token)
-    if not folder_id:
-        print("❌ Could not create/find Box folder. Skipping upload.")
-        return
+def upload_to_box(data, filename, box_token, folder_path=None):
+    """Upload JSON data to Box in a date-stamped folder structure."""
+    if folder_path is None:
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        folder_path = f"daily_raw/{today}/instagram"
+
+    # Create nested folder path
+    folder_id = "0"
+    for segment in folder_path.split("/"):
+        folder_id = create_box_folder(segment, folder_id, box_token)
+        if not folder_id:
+            print("❌ Could not create/find Box folder. Skipping upload.")
+            return
 
     print(f"\n📤 Uploading '{filename}' to Box...")
 
@@ -236,7 +243,7 @@ if __name__ == "__main__":
             print(f"   🕐 Posted: {post['timestamp']}")
 
         # Upload to Box
-        upload_to_box(top_posts, "instagram_daily_top_3.json", BOX_TOKEN)
+        upload_to_box({"items": top_posts}, "instagram_trends.json", BOX_TOKEN)
 
     except Exception as e:
         print(f"❌ Operation failed: {e}")
