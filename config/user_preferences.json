@@ -30,7 +30,7 @@
     "instagram": {
       "enabled": true,
       "interests": ["design", "technology", "startups"],
-      "followed_users": ["designwithin", "techcrunch"],
+      "followed_users": ["nasa", "natgeo", "nike", "spacex", "techcrunch"],
       "content_types": ["image", "carousel", "reel"],
       "min_engagement": 100,
       "recency_preference": "trending_first"
