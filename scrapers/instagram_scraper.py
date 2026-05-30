@@ -3,39 +3,57 @@ from apify_client import ApifyClient
 
 # 1. Initialize the ApifyClient with your personal API token
 # (Best practice: use an environment variable or paste your token string directly)
-API_TOKEN = "{TODO_REPLACE_WITH_YOUR_API_KEY}"
+API_TOKEN = ""
 client = ApifyClient(API_TOKEN)
 
 # 2. Configure what you want to scrape
 # Adjust the mode to "profile", "hashtag", "postUrl", etc.
+
+# 2. Target profiles
+instagram_handles = ["nasa", "natgeo", "nike", "spacex", "starbucks", "airbnb", "google", "playstation", "lego", "nintendo"]
+profile_urls = [f"https://www.instagram.com/{handle}/" for handle in instagram_handles]
+
+# 3. Configure the input
+# Setting resultsLimit to 1 ensures the browser fetches only the single most recent/top post per account
 run_input = {
-    "mode": "profile",
-    "usernames": ["natgeo"],  # The Instagram handle you want to target
-    "maxPosts": 5,            # Keep it small for your first test run
-    "maxComments": 2,         # Set to > 0 if you need comment data
-    "includeProfile": True,
+    "directUrls": profile_urls,
+    "resultsType": "posts",
+    "resultsLimit": 1, 
+    "searchLimit": 1,
 }
 
-print("🚀 Starting the Instagram Scraper Actor on Apify cloud...")
+print(f"🚀 Scraping the single top post from {len(profile_urls)} profiles to find the absolute top 3...")
 
-# 3. Call the Actor and wait for it to finish
-# We use automation-lab's robust wrapper here
-run = client.actor("automation-lab/instagram-scraper").call(run_input=run_input)
+try:
+    # 4. Execute the Actor run
+    run = client.actor("apify/instagram-scraper").call(run_input=run_input)
+    
+    # 5. Extract all returned items
+    all_scraped_posts = client.dataset(run.default_dataset_id).list_items().items
+    
+    # 6. Parse and clean the structures
+    cleaned_posts = []
+    for item in all_scraped_posts:
+        username = item.get("ownerUsername") or item.get("inputUrl", "").strip("/").split("/")[-1]
+        cleaned_posts.append({
+            "username": f"@{username}",
+            "url": item.get("url"),
+            "caption": item.get("caption", ""),
+            "likes": item.get("likesCount", 0),
+            "comments": item.get("commentsCount", 0),
+            "timestamp": item.get("timestamp")
+        })
+        
+    # 7. Apply global sorting by popularity metric (e.g., Likes) and slice the top 3
+    # Change 'likes' to 'timestamp' if you want strictly chronological across profiles
+    global_top_3 = sorted(cleaned_posts, key=lambda x: x["likes"], reverse=True)[:3]
+    
+    # 8. Display results
+    print("\n" + "="*50 + "\n🏆 GLOBAL TOP 3 POSTS ACROSS ALL PROFILES\n" + "="*50)
+    for idx, post in enumerate(global_top_3, 1):
+        print(f"\n{idx}. 🔥 {post['username']} | ❤️ {post['likes']} Likes")
+        print(f"   🔗 URL: {post['url']}")
+        print(f"   📝 Text: {post['caption'][:90]}...")
 
-print(f"📊 Dataset ID: {run.default_dataset_id}")
-
-# 4. Fetch the results from the dataset
-print("\n📥 Fetching scraped data back to local machine...\n")
-dataset_items = client.dataset(run.default_dataset_id).list_items().items
-
-# 5. Save the data locally to a JSON file
-with open("instagram_data.json", "w", encoding="utf-8") as f:
-    json.dump(dataset_items, f, indent=4, ensure_ascii=False)
-
-print("💾 Success! Data saved to 'instagram_data.json'. Here is a sample of the structure:")
-
-# Print a preview of the first item found
-if dataset_items:
-    print(json.dumps(dataset_items[0], indent=2)[:500] + "...\n[Truncated]")
-else:
-    print("No items found. Double check your target profile is public.")
+except Exception as e:
+    print(f"❌ Operation failed: {e}")
