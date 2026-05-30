@@ -45,8 +45,9 @@ def create_box_folder(folder_name, parent_folder_id="0", developer_token=""):
 
 # 1. Initialize the ApifyClient with your personal API token
 # (Best practice: use an environment variable or paste your token string directly)
-API_TOKEN = ""
-BOX_TOKEN = ""
+
+API_TOKEN = "TODO"
+BOX_TOKEN = "TODO"
 client = ApifyClient(API_TOKEN)
 
 # 2. Configure what you want to scrape
