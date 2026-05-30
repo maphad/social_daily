@@ -327,15 +327,24 @@ def run_curator() -> int:
         try:
             raw_payloads[platform] = box.download_json_file(search_folder, raw_filename).get("items", [])
             print(f"✓ Downloaded {raw_filename} for {platform} ({len(raw_payloads[platform])} items)")
+            if raw_payloads[platform]:
+                print(f"   Sample item keys: {list(raw_payloads[platform][0].keys())}")
         except Exception as error:
             print(f"⚠️  Error downloading {raw_filename}: {error}")
             raw_payloads[platform] = []
 
     prompt = build_prompt(raw_payloads, preferences)
     markdown_digest = query_openai(prompt)
+    print(f"\n📝 Generated digest preview:\n{markdown_digest[:500]}\n")
 
     box.upload_text_file(digest_folder, "digest.md", markdown_digest)
     print(f"✓ Uploaded digest.md to Box path {digest_folder} (or local output fallback)")
+
+    # Also save locally for easy access
+    local_digest_path = LOCAL_OUTPUT_ROOT / digest_folder.strip("/") / "digest.md"
+    local_digest_path.parent.mkdir(parents=True, exist_ok=True)
+    local_digest_path.write_text(markdown_digest, encoding="utf-8")
+    print(f"✓ Saved local copy to {local_digest_path}")
 
     delivery_config = preferences.get("delivery") or {}
     delivery_channel = delivery_config.get("channel")

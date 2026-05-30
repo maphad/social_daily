@@ -143,10 +143,23 @@ def scrape_instagram(handles, api_token, results_limit=5):
     cleaned_posts = []
     for item in all_scraped_posts:
         username = item.get("ownerUsername") or item.get("inputUrl", "").strip("/").split("/")[-1]
+        caption = item.get("caption", "")
         cleaned_posts.append({
-            "username": f"@{username}",
+            "id": item.get("id") or item.get("shortCode", ""),
+            "title": caption[:80].split("\n")[0] if caption else f"Post by @{username}",
+            "author": item.get("ownerFullName") or username,
+            "author_handle": username,
+            "excerpt": caption[:200] if caption else "",
             "url": item.get("url"),
-            "caption": item.get("caption", ""),
+            "content_type": (item.get("type") or "image").lower(),
+            "posted_at": item.get("timestamp"),
+            "engagement": {
+                "likes": item.get("likesCount", 0),
+                "comments": item.get("commentsCount", 0),
+                "shares": 0,
+            },
+            "keywords": item.get("hashtags", []),
+            # Keep flat fields for display/sorting
             "likes": item.get("likesCount", 0),
             "comments": item.get("commentsCount", 0),
             "timestamp": item.get("timestamp"),
@@ -199,7 +212,20 @@ def upload_to_box(data, filename, box_token, folder_path=None):
         file_id = response.json()["entries"][0]["id"]
         print(f"🎉 Success! File uploaded to Box. File ID: {file_id}")
     elif response.status_code == 409:
-        print("🔄 File already exists in Box. Delete the old file or change the filename to overwrite.")
+        # File exists — upload a new version
+        existing_file_id = response.json()["context_info"]["conflicts"]["id"]
+        print(f"🔄 File already exists (ID: {existing_file_id}). Uploading new version...")
+        upload_new_version_url = f"https://upload.box.com/api/2.0/files/{existing_file_id}/content"
+        version_response = requests.post(
+            upload_new_version_url,
+            headers=headers,
+            files={"file": (filename, json_bytes, "application/octet-stream")},
+        )
+        if version_response.status_code == 201:
+            print(f"🎉 New version uploaded successfully.")
+        else:
+            print(f"❌ Failed to upload new version. Status: {version_response.status_code}")
+            print(f"📋 Details: {version_response.text}")
     else:
         print(f"❌ Box upload failed. Status: {response.status_code}")
         print(f"📋 Details: {response.text}")
@@ -237,9 +263,9 @@ if __name__ == "__main__":
         print("🏆 TOP 3 INSTAGRAM POSTS (Last 24 Hours)")
         print("=" * 50)
         for idx, post in enumerate(top_posts, 1):
-            print(f"\n{idx}. 🔥 {post['username']} | ❤️ {post['likes']} Likes")
+            print(f"\n{idx}. 🔥 @{post['author_handle']} | ❤️ {post['likes']} Likes")
             print(f"   � URL: {post['url']}")
-            print(f"   📝 Text: {post['caption'][:90]}...")
+            print(f"   📝 Text: {post['excerpt'][:90]}...")
             print(f"   🕐 Posted: {post['timestamp']}")
 
         # Upload to Box
