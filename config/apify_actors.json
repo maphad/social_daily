@@ -1,0 +1,39 @@
+{
+  "actors": [
+    {
+      "name": "LinkedIn Trends Actor",
+      "platform": "linkedin",
+      "apify_actor_id": "YOUR_APIFY_ACTOR_ID_LINKEDIN",
+      "schedule": "0 0 * * *",
+      "schedule_timezone": "UTC",
+      "box_output_path": "/raw-data/{date}/linkedin/trends.json",
+      "description": "Scrapes LinkedIn trending posts, articles, and updates based on keywords"
+    },
+    {
+      "name": "YouTube Trends Actor",
+      "platform": "youtube",
+      "apify_actor_id": "YOUR_APIFY_ACTOR_ID_YOUTUBE",
+      "schedule": "0 0 * * *",
+      "schedule_timezone": "UTC",
+      "box_output_path": "/raw-data/{date}/youtube/trends.json",
+      "description": "Scrapes YouTube trending videos in specified categories"
+    },
+    {
+      "name": "Instagram Trends Actor",
+      "platform": "instagram",
+      "apify_actor_id": "YOUR_APIFY_ACTOR_ID_INSTAGRAM",
+      "schedule": "0 0 * * *",
+      "schedule_timezone": "UTC",
+      "box_output_path": "/raw-data/{date}/instagram/trends.json",
+      "description": "Scrapes Instagram trending posts and hashtags"
+    }
+  ],
+  "setup_instructions": {
+    "step1": "Create actors in Apify for each platform using their web scraping templates",
+    "step2": "Configure each actor to output JSON format",
+    "step3": "Set up Box integration in Apify to push results to /raw-data/{date}/{platform}/trends.json",
+    "step4": "Enable cron scheduling for daily 12:00 AM UTC execution",
+    "step5": "Store Apify API token in .env as APIFY_API_TOKEN",
+    "step6": "Store Box credentials in .env"
+  }
+}

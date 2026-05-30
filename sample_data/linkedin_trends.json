@@ -1,0 +1,101 @@
+{
+  "items": [
+    {
+      "id": "li-001",
+      "title": "The Future of AI in Enterprise: 2026 Predictions",
+      "author": "Jane Smith",
+      "author_handle": "janesmith",
+      "excerpt": "Recent analysis shows that AI adoption in enterprise software has increased 300% over the past 18 months. Here are the key trends shaping 2026.",
+      "url": "https://linkedin.com/feed/update/urn:li:activity:7290129832947261440",
+      "content_type": "article",
+      "posted_at": "2026-05-30T08:45:00Z",
+      "engagement": {
+        "likes": 5240,
+        "comments": 342,
+        "shares": 156
+      },
+      "thumbnail_url": "https://media.licdn.com/example.jpg",
+      "keywords": ["AI", "enterprise", "technology", "machine learning", "digital transformation"]
+    },
+    {
+      "id": "li-002",
+      "title": "Building Scalable Microservices: Lessons Learned",
+      "author": "Bob Johnson",
+      "author_handle": "bobjohnson",
+      "excerpt": "After 5 years of building microservices at scale, here are the architectural patterns that worked and the ones we abandoned.",
+      "url": "https://linkedin.com/feed/update/urn:li:activity:7290121904329216000",
+      "content_type": "post",
+      "posted_at": "2026-05-29T14:20:00Z",
+      "engagement": {
+        "likes": 1240,
+        "comments": 89,
+        "shares": 34
+      },
+      "keywords": ["microservices", "architecture", "backend", "engineering", "cloud computing"]
+    },
+    {
+      "id": "li-003",
+      "title": "Cloud Computing Cost Optimization: A New Framework",
+      "author": "Alice Chen",
+      "author_handle": "alicechen",
+      "excerpt": "Cloud costs continue to spiral for many organizations. We developed a new framework for cost attribution and optimization.",
+      "url": "https://linkedin.com/feed/update/urn:li:activity:7290089456932128768",
+      "content_type": "article",
+      "posted_at": "2026-05-29T11:10:00Z",
+      "engagement": {
+        "likes": 892,
+        "comments": 76,
+        "shares": 23
+      },
+      "keywords": ["cloud", "cost", "AWS", "optimization", "engineering"]
+    },
+    {
+      "id": "li-004",
+      "title": "Why Your Next Startup Should Be on Blockchain",
+      "author": "Crypto Bro",
+      "author_handle": "cryptobro123",
+      "excerpt": "Blockchain is the future. Here's why you should build your next company on it.",
+      "url": "https://linkedin.com/feed/update/urn:li:activity:7290045123456789012",
+      "content_type": "post",
+      "posted_at": "2026-05-28T09:30:00Z",
+      "engagement": {
+        "likes": 345,
+        "comments": 234,
+        "shares": 89
+      },
+      "keywords": ["blockchain", "cryptocurrency", "startup", "web3"]
+    },
+    {
+      "id": "li-005",
+      "title": "Real Estate Investment Trends in 2026",
+      "author": "Property Management Co",
+      "author_handle": "realestatetrends",
+      "excerpt": "Housing market analysis for Q2 2026.",
+      "url": "https://linkedin.com/feed/update/urn:li:activity:7289987654321098765",
+      "content_type": "article",
+      "posted_at": "2026-05-28T07:00:00Z",
+      "engagement": {
+        "likes": 234,
+        "comments": 45,
+        "shares": 12
+      },
+      "keywords": ["real estate", "property", "investment", "housing"]
+    },
+    {
+      "id": "li-006",
+      "title": "Kubernetes in Production: What We Learned",
+      "author": "DevOps Team",
+      "author_handle": "devopsinsights",
+      "excerpt": "Running Kubernetes at scale requires careful attention to security, networking, and resource management.",
+      "url": "https://linkedin.com/feed/update/urn:li:activity:7289945672839201001",
+      "content_type": "post",
+      "posted_at": "2026-05-27T16:45:00Z",
+      "engagement": {
+        "likes": 2103,
+        "comments": 187,
+        "shares": 95
+      },
+      "keywords": ["kubernetes", "cloud", "DevOps", "containers", "technology"]
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Daily Digest - {{ digest_date }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #007AFF;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #007AFF;
+            font-size: 24px;
+        }
+        .header p {
+            margin: 5px 0 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .platform-section {
+            margin-bottom: 35px;
+        }
+        .platform-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .platform-emoji {
+            font-size: 24px;
+        }
+        .item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            border-left: 4px solid #007AFF;
+        }
+        .item-rank {
+            display: inline-block;
+            background: #007AFF;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .item-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #007AFF;
+            margin-bottom: 8px;
+        }
+        .item-author {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .item-excerpt {
+            color: #444;
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        .item-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .item-interests {
+            display: inline-block;
+            background: #e8f4ff;
+            color: #007AFF;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .item-link {
+            display: inline-block;
+            background: #007AFF;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        .item-link:hover {
+            background: #0051cc;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+        .footer a {
+            color: #007AFF;
+            text-decoration: none;
+        }
+        .empty-platform {
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+            text-align: center;
+            background: #f9f9f9;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📰 Your Social Daily Digest</h1>
+            <p>{{ digest_date }} • Curated just for you</p>
+        </div>
+
+        <!-- Platform Sections -->
+        {% for platform_name, platform_data in platforms.items() %}
+        <div class="platform-section">
+            <div class="platform-title">
+                <span class="platform-emoji">{{ platform_data.emoji }}</span>
+                <span>{{ platform_data.name }}</span>
+            </div>
+
+            {% if platform_data.items|length > 0 %}
+                {% for item in platform_data.items %}
+                <div class="item">
+                    <div>
+                        <span class="item-rank">{{ loop.index }}</span>
+                        <span class="item-title">{{ item.title }}</span>
+                    </div>
+                    
+                    <div class="item-author">
+                        By <strong>@{{ item.author_handle }}</strong>
+                    </div>
+                    
+                    <div class="item-excerpt">
+                        {{ item.excerpt }}
+                    </div>
+                    
+                    <div class="item-meta">
+                        <span>📊 Relevance: {{ (item._score * 100)|int }}%</span>
+                        {% if item.engagement %}
+                            {% if item.engagement.likes %}
+                            <span>❤️ {{ item.engagement.likes }}</span>
+                            {% endif %}
+                            {% if item.engagement.comments %}
+                            <span>💬 {{ item.engagement.comments }}</span>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                    
+                    {% if item._matched_interests %}
+                    <div>
+                        {% for interest in item._matched_interests %}
+                        <span class="item-interests">{{ interest }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <a href="{{ item.url }}" class="item-link">Read Full Post →</a>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-platform">
+                    No items matched your preferences for today
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>
+                💡 <strong>Tip:</strong> Customize your preferences to get more relevant content.
+            </p>
+            <p>
+                <a href="https://socialdaily.example.com/preferences">Update Your Preferences</a> • 
+                <a href="https://socialdaily.example.com/unsubscribe">Unsubscribe</a>
+            </p>
+            <p>
+                Social Daily • Next digest: <strong>{{ digest_date }}</strong>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

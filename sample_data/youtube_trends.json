@@ -1,0 +1,112 @@
+{
+  "items": [
+    {
+      "id": "yt-001",
+      "title": "Python 3.14 New Features You NEED to Know",
+      "channel": "TechCrunch",
+      "channel_handle": "techcrunch",
+      "excerpt": "Python 3.14 introduces significant improvements to async/await, pattern matching, and performance. This comprehensive walkthrough covers everything new developers should know.",
+      "url": "https://youtube.com/watch?v=dQw4w9WgXcQ",
+      "content_type": "video",
+      "posted_at": "2026-05-30T10:30:00Z",
+      "engagement": {
+        "views": 245000,
+        "likes": 12400,
+        "comments": 3200
+      },
+      "video_length": "14:32",
+      "thumbnail_url": "https://i.ytimg.com/vi/example/maxresdefault.jpg",
+      "keywords": ["Python", "programming", "technology", "tutorial", "development"]
+    },
+    {
+      "id": "yt-002",
+      "title": "AWS Lambda Performance Optimization Tips",
+      "channel": "Google Developers",
+      "channel_handle": "googledevs",
+      "excerpt": "Learn how to optimize your Lambda functions for cost and performance. We cover cold starts, memory allocation, and real-world examples.",
+      "url": "https://youtube.com/watch?v=9bZkp7q19f0",
+      "content_type": "video",
+      "posted_at": "2026-05-30T06:15:00Z",
+      "engagement": {
+        "views": 98000,
+        "likes": 5120,
+        "comments": 892
+      },
+      "video_length": "22:15",
+      "thumbnail_url": "https://i.ytimg.com/vi/example/maxresdefault.jpg",
+      "keywords": ["AWS", "Lambda", "cloud computing", "programming", "tutorial"]
+    },
+    {
+      "id": "yt-003",
+      "title": "Building Distributed Systems from First Principles",
+      "channel": "Stanford Online",
+      "channel_handle": "stanfordonline",
+      "excerpt": "Comprehensive course on distributed systems architecture, consensus algorithms, and real-world challenges.",
+      "url": "https://youtube.com/watch?v=xyaxd9wSCKE",
+      "content_type": "video",
+      "posted_at": "2026-05-29T14:00:00Z",
+      "engagement": {
+        "views": 156000,
+        "likes": 8200,
+        "comments": 1450
+      },
+      "video_length": "45:20",
+      "thumbnail_url": "https://i.ytimg.com/vi/example/maxresdefault.jpg",
+      "keywords": ["distributed systems", "engineering", "computer science", "technology"]
+    },
+    {
+      "id": "yt-004",
+      "title": "AI Hype vs Reality: Expert Panel Discussion",
+      "channel": "TechCrunch",
+      "channel_handle": "techcrunch",
+      "excerpt": "Industry leaders discuss the current state of AI, realistic applications, and where the hype is overblown.",
+      "url": "https://youtube.com/watch?v=RXJJJlRZ5x0",
+      "content_type": "video",
+      "posted_at": "2026-05-29T12:30:00Z",
+      "engagement": {
+        "views": 378000,
+        "likes": 19400,
+        "comments": 5670
+      },
+      "video_length": "58:45",
+      "thumbnail_url": "https://i.ytimg.com/vi/example/maxresdefault.jpg",
+      "keywords": ["AI", "machine learning", "technology", "panel discussion", "trends"]
+    },
+    {
+      "id": "yt-005",
+      "title": "Stock Market Analysis - Tech Sector Breakdown",
+      "channel": "FinanceTV",
+      "channel_handle": "financetv",
+      "excerpt": "Detailed analysis of tech stock performance and predictions for Q3.",
+      "url": "https://youtube.com/watch?v=8x3W0a0x0x0",
+      "content_type": "video",
+      "posted_at": "2026-05-28T16:00:00Z",
+      "engagement": {
+        "views": 52000,
+        "likes": 2100,
+        "comments": 456
+      },
+      "video_length": "32:10",
+      "thumbnail_url": "https://i.ytimg.com/vi/example/maxresdefault.jpg",
+      "keywords": ["finance", "stocks", "investment", "market analysis"]
+    },
+    {
+      "id": "yt-006",
+      "title": "JavaScript Async Patterns: A Deep Dive",
+      "channel": "JavaScript Mastery",
+      "channel_handle": "jsmastery",
+      "excerpt": "Understanding promises, async/await, and error handling in modern JavaScript.",
+      "url": "https://youtube.com/watch?v=js123456789a",
+      "content_type": "video",
+      "posted_at": "2026-05-28T10:45:00Z",
+      "engagement": {
+        "views": 289000,
+        "likes": 14500,
+        "comments": 2890
+      },
+      "video_length": "27:30",
+      "thumbnail_url": "https://i.ytimg.com/vi/example/maxresdefault.jpg",
+      "keywords": ["JavaScript", "programming", "technology", "tutorial", "web development"]
+    }
+  ]
+}

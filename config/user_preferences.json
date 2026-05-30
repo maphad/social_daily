@@ -1,0 +1,39 @@
+{
+  "user": {
+    "name": "Demo User",
+    "email": "demo@example.com",
+    "phone": "+1-555-0123",
+    "whatsapp": "+1-555-0123",
+    "timezone": "America/New_York",
+    "delivery_time": "09:00",
+    "delivery_channels": ["email", "console"],
+    "user_id": "demo-user-001"
+  },
+  "platforms": {
+    "linkedin": {
+      "enabled": true,
+      "interests": ["technology", "AI", "startup", "cloud computing", "engineering"],
+      "excluded_keywords": ["cryptocurrency", "real estate", "forex"],
+      "followed_users": ["satya_nadella", "timcook", "elonmusk"],
+      "content_types": ["article", "post", "video"],
+      "min_engagement": 50,
+      "recency_preference": "trending_first"
+    },
+    "youtube": {
+      "enabled": true,
+      "interests": ["technology", "programming", "AI", "machine learning"],
+      "followed_channels": ["TechCrunch", "Stanford Online", "Google Developers"],
+      "content_types": ["video"],
+      "min_engagement": 10000,
+      "recency_preference": "recent_first"
+    },
+    "instagram": {
+      "enabled": true,
+      "interests": ["design", "technology", "startups"],
+      "followed_users": ["designwithin", "techcrunch"],
+      "content_types": ["image", "carousel", "reel"],
+      "min_engagement": 100,
+      "recency_preference": "trending_first"
+    }
+  }
+}

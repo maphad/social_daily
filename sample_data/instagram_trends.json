@@ -1,0 +1,106 @@
+{
+  "items": [
+    {
+      "id": "ig-001",
+      "title": "The Future of Product Design in 2026",
+      "author": "Design Studio Co",
+      "author_handle": "designwithin",
+      "excerpt": "Exploring emerging design trends and tools shaping the industry.",
+      "url": "https://instagram.com/p/example001",
+      "content_type": "carousel",
+      "posted_at": "2026-05-30T12:00:00Z",
+      "engagement": {
+        "likes": 4200,
+        "comments": 340,
+        "shares": 156
+      },
+      "thumbnail_url": "https://instagram.com/example.jpg",
+      "keywords": ["design", "technology", "UI/UX", "trends", "innovation"]
+    },
+    {
+      "id": "ig-002",
+      "title": "Startup Life: Behind the Scenes at Our 50-Person Team",
+      "author": "TechCrunch",
+      "author_handle": "techcrunch",
+      "excerpt": "A day in the life of our growing startup team.",
+      "url": "https://instagram.com/p/example002",
+      "content_type": "reel",
+      "posted_at": "2026-05-30T09:30:00Z",
+      "engagement": {
+        "likes": 8900,
+        "comments": 1200,
+        "shares": 450
+      },
+      "thumbnail_url": "https://instagram.com/example.jpg",
+      "keywords": ["startup", "technology", "business", "team", "culture"]
+    },
+    {
+      "id": "ig-003",
+      "title": "Minimalist Office Setup Goals",
+      "author": "Office Design Daily",
+      "author_handle": "officedesigndaily",
+      "excerpt": "Clean, minimal workspace inspiration for remote workers.",
+      "url": "https://instagram.com/p/example003",
+      "content_type": "image",
+      "posted_at": "2026-05-29T15:45:00Z",
+      "engagement": {
+        "likes": 12400,
+        "comments": 890,
+        "shares": 234
+      },
+      "thumbnail_url": "https://instagram.com/example.jpg",
+      "keywords": ["design", "workspace", "productivity", "minimalism", "aesthetic"]
+    },
+    {
+      "id": "ig-004",
+      "title": "Crypto NFT Marketplace Launch",
+      "author": "Web3 Startup",
+      "author_handle": "web3startup",
+      "excerpt": "Check out our new NFT marketplace built on blockchain.",
+      "url": "https://instagram.com/p/example004",
+      "content_type": "post",
+      "posted_at": "2026-05-29T11:20:00Z",
+      "engagement": {
+        "likes": 2100,
+        "comments": 567,
+        "shares": 123
+      },
+      "thumbnail_url": "https://instagram.com/example.jpg",
+      "keywords": ["cryptocurrency", "blockchain", "NFT", "web3"]
+    },
+    {
+      "id": "ig-005",
+      "title": "Summer Fashion Trends 2026",
+      "author": "Fashion Influencer",
+      "author_handle": "fashioninfluencer",
+      "excerpt": "Top summer fashion picks and outfit ideas.",
+      "url": "https://instagram.com/p/example005",
+      "content_type": "carousel",
+      "posted_at": "2026-05-28T13:00:00Z",
+      "engagement": {
+        "likes": 34500,
+        "comments": 3210,
+        "shares": 890
+      },
+      "thumbnail_url": "https://instagram.com/example.jpg",
+      "keywords": ["fashion", "style", "summer", "trends"]
+    },
+    {
+      "id": "ig-006",
+      "title": "AI Image Generation Tool - First Look",
+      "author": "Tech Reviews",
+      "author_handle": "techreviews",
+      "excerpt": "Hands-on review of the latest AI image generation platform.",
+      "url": "https://instagram.com/p/example006",
+      "content_type": "reel",
+      "posted_at": "2026-05-28T08:15:00Z",
+      "engagement": {
+        "likes": 9800,
+        "comments": 1450,
+        "shares": 320
+      },
+      "thumbnail_url": "https://instagram.com/example.jpg",
+      "keywords": ["AI", "technology", "tools", "innovation", "review"]
+    }
+  ]
+}
