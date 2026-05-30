@@ -1,134 +1,66 @@
-# Social Daily
 
-A personalized social media curation agent that generates a daily digest of the top 3 most relevant posts from each of your social media platforms based on your interests and preferences.
+Social Daily 📱❌🔄
+The Anti-Doomscroll Media Curator
 
-## Overview
+Social Daily is a personalized media curation engine built to solve the modern crisis of digital fatigue, algorithmic addiction, and endless doomscrolling.
 
-Social Daily solves the doomscrolling problem by delivering a curated, finite feed of the most relevant content from multiple social media platforms (LinkedIn, YouTube, Instagram, and more) directly to your inbox. Instead of spending hours browsing, you get a daily digest with just the best content tailored to your interests.
+Instead of letting engagement-maximized networks dictate your attention span, Social Daily flips the paradigm. It coordinates targeted platform scrapers to extract high-value content completely in memory, enforcing a strict, non-negotiable budget of exactly 3 high-signal items per platform per day. The system packages this curated selection into a beautifully formatted daily PDF digest and archives it, alongside the filtered raw data payloads, securely inside Box.
 
-## Features
+🚀 The Core Philosophy
+* Finite over Infinite: No infinite scroll mechanics. A hard ceiling of exactly 3 items per platform ensures you stay informed without falling down the rabbit hole.
+* Intentional over Algorithmic: You define what matters—specific creators, target topics, or themes—not a third-party retention metric.
+* Deterministic Reliability: Built entirely on predictable software mechanics. By utilizing targeted scraping boundaries at the ingestion layer, the pipeline handles input parsing, content mapping, PDF generation, and storage with zero non-deterministic overhead or API token dependencies.
+🛠️ System Architecture & Data Flow
+Social Daily uses an efficient, decoupled pipeline design that executes major transformations completely in memory before using Box as a centralized system bus. This ensures lightning-fast execution, removes disk-space cleanup overhead, and keeps the application footprint ready to scale to cloud ecosystems (like AWS or Azure) down the road.
+┌────────────────────────────────────────────────────────┐
+│ 1. Targeted In-Memory Scraping (Apify)                 │
+│    Scrapers extract *exactly* the top 3 items per app │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────┐
+│ 2. Automated Box Synchronization                       │
+│    In the root folder, adds new files per day with date     │
+└──────────────────────────┬─────────────────────────────┘
+                           │
+                           ▼                                  
+┌──────────────────────---------------------------------──┐      
+│      Compiles clean layout    │  completely in memory  
+└──────────────┬──────---------------------------------───┘       
+                                                   │
+                                                   ▼
+┌────────────────────────────────────────────────────────┐
+│ 4. Permanent Cloud Commit                              │
+│    Uploads JSON backups & Daily digest pdf to Box      │
+└────────────────────────────────────────────────────────┘
+📁 Repository Structure
+.
+├── scrapers/
+│   └── multi_platform_scraper.py          # Main execution file (Scraper Orchestrator + PDF Engine + Box I/O)
+├── config/
+│   └── user_preferences.json  # Blueprint schema for tracking target user interests
+└── README.md               # This file
 
-- **Multi-Platform Support**: Aggregate content from LinkedIn, YouTube, Instagram, Twitter, and more
-- **Preference-Based Curation**: Customize what you want to see based on:
-  - Topics/areas of interest
-  - Specific people you follow
-  - Content types and formats
-  - Engagement levels and recency
-- **Daily Digest Delivery**: Automatic email/SMS/WhatsApp delivery of your personalized feed
-- **Doomscroll Prevention**: Strict limit of 3 items per platform per day
-- **Cloud-Native Architecture**: Built on AWS with scalable, serverless components
-- **Content Storage**: All digests archived in Box for historical reference
-- **Intelligent Aggregation**: Uses trend data + user preferences to select top content
+⚙️ Operational Setup
 
-## Architecture
-
-**Hackathon MVP** (Apify + Box + Python Curator):
-```
-┌─────────────────────────────────────────────────────────────┐
-│                Apify Actors (Cron Scheduled)                 │
-│     Scrapes LinkedIn, YouTube, Instagram daily              │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────┐
-│          Box Storage (Raw Trend Data)                        │
-│   /raw-data/YYYY-MM-DD/{platform}/trends.json              │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────┐
-│        Python Curator (Runs on Schedule)                     │
-│    1. Load user preferences                                  │
-│    2. Fetch daily trends from Box                            │
-│    3. Score & rank content (top 3 per platform)              │
-│    4. Generate digest                                        │
-└──────────────────────┬──────────────────────────────────────┘
-                       │
-        ┌──────────────┼──────────────┐
-        │              │              │
-   ┌────▼────┐   ┌────▼────┐   ┌────▼────┐
-   │  Email  │   │   SMS   │   │ WhatsApp│
-   └─────────┘   └─────────┘   └─────────┘
-        │              │              │
-        └──────────────┼──────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────────┐
-│        Box Storage (Digest Archive)                          │
-│    /digests/YYYY-MM-DD/{user-id}-digest.html               │
-└──────────────────────────────────────────────────────────────┘
-```
-
-**Key Components**:
-- **Apify**: Scheduled web scraping (handles the hard part)
-- **Box**: Centralized storage for trends and digests
-- **Curator**: Intelligent content ranking and delivery
-- **User Preferences**: Configurable interests, exclusions, followed accounts
-
-## Technology Stack
-
-- **Web Scraping**: [Apify](https://apify.com) (serverless web scraping actors)
-- **File Storage**: [Box](https://box.com) (cloud storage for trends & digests)
-- **Curation Engine**: Python 3.9+ (scoring algorithm, personalization)
-- **Notifications**: Email (SMTP), SMS (Twilio), WhatsApp (Twilio)
-- **Task Scheduling**: Apify cron + Optional AWS Lambda
-- **Templating**: Jinja2 (HTML email generation)
-- **Preferences**: JSON config (easily extensible to database)
-
-## Quick Start
-
-### 1. Clone & Install
-```bash
+# Clone the repository
 git clone https://github.com/maphad/social_daily.git
 cd social_daily
-pip install -r requirements.txt
-```
 
-### 2. Run Demo (30 seconds)
-```bash
-python src/curator.py
-```
+# Initialize local environment targets
+Edit the python script to add your active APIFY_API_TOKEN and BOX_DEVELOPER_TOKEN
 
-This generates:
-- JSON digest in `output/`
-- HTML email in `output/`
-- Console summary of curated content
+# Install python, apify
 
-### 3. View Generated Digest
-```bash
-open output/*_digest.html
-```
+#Run it
+python scrapers/instagram_scraper_pdf_generator.py
 
-**See [QUICKSTART.md](./QUICKSTART.md) for detailed walkthrough and customization.**
+📬 Final Output Artifacts
+* Social_Daily_Digest_{MMDDYY}.pdf: A clean, minimal, publication-grade document built dynamically by the Python engine. It presents titles, summaries, and direct links without any visual clutter, ad banners, or algorithmic trapdoors. Read it, close it, and move on with your day.
 
-## Production Setup
+🏆 Team
+Developed during the Cascadia AI Hackathon to reclaim user focus through intentional software engineering.
+Cathy Chian, Madhura Phadnis, Soundarya Burton
 
-### Prerequisites
-- Apify Account (for web scraping)
-- Box Enterprise Account (for file storage)
-- AWS Account (optional: for Lambda scheduler)
-- SMTP credentials (for email delivery)
-
-### Configuration
-```bash
-# Set up environment
-cp .env.example .env
-# Edit .env with your Apify and Box credentials
-```
-
-See [PRODUCT_SPEC.md](./PRODUCT_SPEC.md) for complete deployment guide and technical specifications.
-
-## Documentation
-
-- [Product Specification](./PRODUCT_SPEC.md) - Complete feature specification and technical requirements
-- [Architecture Guide](./docs/ARCHITECTURE.md) - Detailed system design
-- [API Documentation](./docs/API.md) - REST API endpoints for user management
-
-## Contributing
-
-This is a hackathon project. Feel free to open issues and submit pull requests!
-
-## Team
-
-Developed during the Cascadia AI Hackathon
-
-## License
-
-MIT 
+📜 License
+This project is open-source under the MIT License. Defeat the algorithm, protect your time.
